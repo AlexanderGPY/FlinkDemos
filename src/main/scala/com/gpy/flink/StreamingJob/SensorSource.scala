@@ -6,8 +6,6 @@ package com.gpy.flink.StreamingJob
   * @date:2020/8/3 21:14
   */
 
-import java.lang
-import java.lang.Thread
 import java.util.Calendar
 
 import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext
@@ -15,7 +13,6 @@ import org.apache.flink.streaming.api.functions.source.RichParallelSourceFunctio
 
 import scala.util.Random
 
-//case class SensorReading(id: String, timestamp: Long, temperature: Double)
 
 class SensorSource extends RichParallelSourceFunction[SensorReading] {
 

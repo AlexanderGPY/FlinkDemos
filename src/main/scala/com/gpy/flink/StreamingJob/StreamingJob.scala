@@ -34,7 +34,7 @@ object StreamingJob {
     //获取数据源数据
     val stream: DataStream[SensorReading] = env.addSource(new SensorSource)
 
-    /* stream.print()*/
+     /*stream.print()*/
 
     //解析数据
 
