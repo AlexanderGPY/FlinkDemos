@@ -34,6 +34,7 @@ object StreamingJob {
     //解析数据
 
     //spark算子写法
+
     /*    val wordCount = stream
           .map(x => {
             (x.id, x.temperature)
@@ -49,6 +50,7 @@ object StreamingJob {
     // execute program
     env.execute("Flink Streaming Scala API Skeleton")
   }
+
 
   //自定义MapFunction
   class MyMapFunction extends MapFunction[SensorReading, (String,Double)] {

@@ -9,11 +9,9 @@ import org.apache.flink.streaming.api.functions.source.RichParallelSourceFunctio
 
 import scala.util.Random
 
-
 //case class SensorReading(id: String, timestamp: Long, temperature: Double)
 
 class SensorSource extends RichParallelSourceFunction[SensorReading] {
-
 
   //flag表示数据源是否还在正常运行
   var running: Boolean = true
@@ -30,7 +28,7 @@ class SensorSource extends RichParallelSourceFunction[SensorReading] {
 
     var curFTemp = (1 to 10).map {
       //高斯随机数
-      i => ("sensor_" + (taskIdx * 10 + i), 65 + (rand.nextGaussian()+ 20))
+      i => ("sensor_" + (taskIdx * 10 + i), 65 + (rand.nextGaussian() + 20))
     }
     //无限循环 产生数据流
     while (running) {
@@ -42,19 +40,15 @@ class SensorSource extends RichParallelSourceFunction[SensorReading] {
 
       //发射新的传感器数据，注意这里的srcCtx.collect
 
-      curFTemp.foreach(
-        t => srcCtx.collect(SensorReading(t._1, curTime, t._2.formatted("%.2f").toDouble))
-      )
+      curFTemp.foreach(t => srcCtx.collect(SensorReading(t._1, curTime, t._2.formatted("%.2f").toDouble)))
       //每一百毫秒发射一次
       Thread.sleep(100)
     }
   }
 
-
   //可控制的退出操作
   override def cancel(): Unit = {
     running = false
   }
-
 
 }
