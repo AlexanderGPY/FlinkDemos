@@ -28,7 +28,7 @@ object SocketWindowWordCount {
       try {
         11111
       } catch {
-        case Exception =>
+        case e: Exception =>
           System.err.println("No port specified. Please run 'SocketWindowWordCount --port <port>'")
           return
       }

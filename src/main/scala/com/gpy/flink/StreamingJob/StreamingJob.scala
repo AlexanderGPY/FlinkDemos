@@ -6,8 +6,10 @@ package com.gpy.flink.StreamingJob
   * @date:2020/8/3 21:14
   */
 
-import org.apache.flink.api.common.functions.MapFunction
-import org.apache.flink.streaming.api.scala.{createTypeInformation, DataStream, StreamExecutionEnvironment}
+import org.apache.flink.api.common.functions.{MapFunction, ReduceFunction}
+import org.apache.flink.api.java.tuple.Tuple
+import org.apache.flink.streaming.api.functions.co.CoMapFunction
+import org.apache.flink.streaming.api.scala.{createTypeInformation, DataStream, KeyedStream, StreamExecutionEnvironment}
 
 /**
   * Skeleton for a Flink Streaming Job.
@@ -32,23 +34,21 @@ object StreamingJob {
     //获取数据源数据
     val stream: DataStream[SensorReading] = env.addSource(new SensorSource)
 
-    //stream.print()
+    /* stream.print()*/
 
     //解析数据
 
-    //spark算子写法
+    //匿名函数风格 map算子写法
+    /*stream.map(x => (x.id, x.temperature)).keyBy(0).sum(1).print()*/
 
-    /*    val wordCount = stream
-          .map(x => {
-            (x.id, x.temperature)
-          })
-          .keyBy(0)
-          .sum(1)
-        wordCount.print()*/
+    //flink风格 map算子写法，自定义mapfunction
+    /*stream.map(new MyMapFunction).keyBy(0).sum(1).print()*/
 
-    //flink算子写法，自定义mapfunction
+    //匿名函数风格 reduce算子写法
+    /*stream.map(new MyMapFunction).keyBy(0).reduce((x, y) => (x._1, x._2 + y._2)).print()*/
 
-    stream.map(new MyMapFunction).keyBy(0).sum(1).print()
+    //flink风格 reduce算子写法
+    /*stream.map(new MyMapFunction).keyBy(0).reduce(new MyReduceFunction).print()*/
 
     // execute program
     env.execute("Flink Streaming Scala API Skeleton")
@@ -60,4 +60,13 @@ object StreamingJob {
       (t.id, t.temperature)
     }
   }
+  //实现reduceFunction
+  class MyReduceFunction extends ReduceFunction[(String, Double)] {
+    override def reduce(value1: (String, Double), value2: (String, Double)): (String, Double) = {
+      (value1._1, value1._2 + value2._2)
+    }
+  }
+  //实现CoMapFunction
+  //class MyCoMapFunction extends CoMapFunction[]
+
 }
