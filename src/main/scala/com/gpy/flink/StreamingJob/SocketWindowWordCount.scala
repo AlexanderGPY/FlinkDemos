@@ -1,5 +1,11 @@
 package com.gpy.flink.StreamingJob
 
+/**
+  * @description:
+  * @author:AlexanderGuo
+  * @date:2020/8/3 21:14
+  */
+
 import org.apache.flink.streaming.api.scala.{DataStream, StreamExecutionEnvironment}
 
 /**
