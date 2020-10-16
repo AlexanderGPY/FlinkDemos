@@ -34,7 +34,7 @@ object StreamingJob {
     //获取数据源数据
     val stream: DataStream[SensorReading] = env.addSource(new SensorSource)
 
-     /*stream.print()*/
+    //stream.print()
 
     //解析数据
 
@@ -42,10 +42,10 @@ object StreamingJob {
     /*stream.map(x => (x.id, x.temperature)).keyBy(0).sum(1).print()*/
 
     //flink风格 map算子写法，自定义mapfunction
-    /*stream.map(new MyMapFunction).keyBy(0).sum(1).print()*/
+    stream.map(new MyMapFunction).keyBy(0).sum(1).print()
 
     //匿名函数风格 reduce算子写法
-    /*stream.map(new MyMapFunction).keyBy(0).reduce((x, y) => (x._1, x._2 + y._2)).print()*/
+    //stream.map(new MyMapFunction).keyBy(0).reduce((x, y) => (x._1, x._2 + y._2)).print()
 
     //flink风格 reduce算子写法
     /*stream.map(new MyMapFunction).keyBy(0).reduce(new MyReduceFunction).print()*/
